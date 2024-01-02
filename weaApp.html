@@ -16,11 +16,6 @@
             <button onclick="weather()"><img src="https://static.thenounproject.com/png/756363-200.png"> </button>
         </div>
 
-        <div class="notFound">
-            <img src="https://cdni.iconscout.com/illustration/premium/thumb/not-found-7621859-6167013.png">
-            <p>Oops! Invalid Location</p>
-        </div>
-
         <div class="weatherDetails">
             <img id="weatherIcon" src="https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png">
             <span id="M"></span>
@@ -104,10 +99,6 @@
 
             if (typeof data.weather[0] != undefined) {
                 document.getElementById("weatherIcon").src = icons[data.weather[0].main];
-            }
-            else
-            {
-                document.getElementById("weatherIcon").src = `Image not found`;
             }
             
         }
