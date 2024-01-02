@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="w1.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="info">
+        <div class="inpbox">
+            <input id="city" type="text" placeholder="Enter your Location">
+            <button onclick="weather()"><img src="https://static.thenounproject.com/png/756363-200.png"> </button>
+        </div>
+
+        <div class="notFound">
+            <img src="https://cdni.iconscout.com/illustration/premium/thumb/not-found-7621859-6167013.png">
+            <p>Oops! Invalid Location</p>
+        </div>
+
+        <div class="weatherDetails">
+            <img id="weatherIcon" src="https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png">
+            <span id="M"></span>
+            <h1 id="temp"></h1>
+        </div>
+
+        <div class="condtn">
+            <div class="col1">
+                <div class="row1">
+                    <img class="icon" src="https://static.thenounproject.com/png/52631-200.png">
+                    <div class="text">
+                        <span class="wc1" id="feels"></span>
+                        <p class="desc">Feels Like</p>
+                    </div>
+                </div>
+
+                <div class="row2">
+                    <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2675/2675783.png">
+                    <div class="text">
+                        <span class="wc2" id="pre"></span>
+                        <p class="desc1">Pressure</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col2">
+                <div class="row11">
+                    <img class="icon" src="https://icon-library.com/images/humidity-icon/humidity-icon-4.jpg">
+                    <div class="text">
+                        <span class="wc1" id="hum"></span>
+                        <p class="desc">Humidity</p>
+                    </div>
+                </div>
+
+                <div class="row22">
+                    <img class="icon" src="https://static.thenounproject.com/png/1057070-200.png">
+                    <div class="text">
+                        <span class="wc2" id="wind"></span>
+                        <p class="desc1">Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function weather() {
+            const cityName = document.getElementById("city").value;
+            const api = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=b29f0e4ab0d9bf906959f718293acd36`;
+            const res = await fetch(api);
+            const data = await res.json();
+
+            let icons = {
+                "Clouds": "https://cdn-icons-png.flaticon.com/512/4834/4834559.png",
+                "Sunny": "https://s3-alpha.figma.com/hub/file/2803345406/df2a8280-b65b-49da-b706-bed599bf2e0b-cover.png",
+                "Clear": "https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png",
+                "Rain": "https://cdn-icons-png.flaticon.com/512/2930/2930015.png",
+                "Thunderstorm": "https://www.freeiconspng.com/thumbs/thunderstorm-icon/thunderstorm-icon-14.png",
+                "Mist": "https://static.thenounproject.com/png/3244281-200.png",
+                "Drizzle": "https://cdn-icons-png.flaticon.com/512/6423/6423427.png",
+                "Partly cloudy night": "https://cdn-icons-png.flaticon.com/512/6805/6805164.png",
+                "Partly sunny": "https://icon-library.com/images/partly-cloudy-weather-icon/partly-cloudy-weather-icon-22.jpg",
+                "Clear night": "https://www.ksdk.com/assets/shared-images/weather-icons/partly-cloudy-night_210x210.png",
+                "Haze": "https://cdn-icons-png.flaticon.com/512/1808/1808478.png",
+                "Snow": "https://cdn-icons-png.flaticon.com/512/7614/7614416.png",
+                "Smoke": "https://cdn-icons-png.flaticon.com/512/9309/9309008.png"
+            };
+
+            console.log(data);
+
+
+            var w = Math.trunc(data.main.temp) / 10;
+            document.getElementById("temp").innerHTML = `${w}°C`;
+            document.getElementById("M").innerHTML = `${data.weather[0].main}`;
+            var f = Math.trunc(data.main.feels_like) / 10;
+            document.getElementById("feels").innerHTML = `${f}°`;
+            document.getElementById("pre").innerHTML = `${data.main.pressure}mb`;
+            document.getElementById("hum").innerHTML = `${data.main.humidity}%`;
+            document.getElementById("wind").innerHTML = `${data.wind.speed}km/hr`;
+
+
+            if (typeof data.weather[0] != undefined) {
+                document.getElementById("weatherIcon").src = icons[data.weather[0].main];
+            }
+            else
+            {
+                document.getElementById("weatherIcon").src = `Image not found`;
+            }
+            
+        }
+    </script>
+
+</body>
+
+</html>
